@@ -2,7 +2,6 @@ in_*.txt
 out_*.txt
 metadata.json
 __pycache__
-B/
 C/
 D/
 E/
