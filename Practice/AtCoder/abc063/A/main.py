@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 import sys
 
-YES = "vowel"
-NO = "consonant"
+ERROR = "error"
 
-def solve(c: str):
-    if c in set(('a', 'e', 'i', 'o', 'u')):
-        print(YES)
+def solve(A: int, B: int):
+    if (A+B) >= 10:
+        print(ERROR)
     else:
-        print(NO)
+        print(A+B)
     return
 
 
@@ -19,8 +18,9 @@ def main():
             for word in line.split():
                 yield word
     tokens = iterate_tokens()
-    c = next(tokens)  # type: str
-    solve(c)
+    A = int(next(tokens))  # type: int
+    B = int(next(tokens))  # type: int
+    solve(A, B)
 
 if __name__ == '__main__':
     main()

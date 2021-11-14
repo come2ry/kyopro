@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 import sys
 
-YES = "vowel"
-NO = "consonant"
 
-def solve(c: str):
-    if c in set(('a', 'e', 'i', 'o', 'u')):
-        print(YES)
-    else:
-        print(NO)
+def solve(A: int, B: int, C: int, D: int):
+    print(max(A*B, C*D))
     return
 
 
@@ -19,8 +14,11 @@ def main():
             for word in line.split():
                 yield word
     tokens = iterate_tokens()
-    c = next(tokens)  # type: str
-    solve(c)
+    A = int(next(tokens))  # type: int
+    B = int(next(tokens))  # type: int
+    C = int(next(tokens))  # type: int
+    D = int(next(tokens))  # type: int
+    solve(A, B, C, D)
 
 if __name__ == '__main__':
     main()

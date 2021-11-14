@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 import sys
 
-YES = "vowel"
-NO = "consonant"
 
-def solve(c: str):
-    if c in set(('a', 'e', 'i', 'o', 'u')):
-        print(YES)
-    else:
-        print(NO)
+def solve(N: int):
+    print((N * 800) - (N//15) * 200)
     return
 
 
@@ -19,8 +14,8 @@ def main():
             for word in line.split():
                 yield word
     tokens = iterate_tokens()
-    c = next(tokens)  # type: str
-    solve(c)
+    N = int(next(tokens))  # type: int
+    solve(N)
 
 if __name__ == '__main__':
     main()

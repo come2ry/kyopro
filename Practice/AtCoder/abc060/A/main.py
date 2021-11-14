@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 import sys
 
-YES = "vowel"
-NO = "consonant"
+YES = "YES"  # type: str
+NO = "NO"  # type: str
 
-def solve(c: str):
-    if c in set(('a', 'e', 'i', 'o', 'u')):
+
+def solve(A: str, B: str, C: str):
+    if A[-1] == B[0] and B[-1] == C[0]:
         print(YES)
     else:
         print(NO)
@@ -19,8 +20,10 @@ def main():
             for word in line.split():
                 yield word
     tokens = iterate_tokens()
-    c = next(tokens)  # type: str
-    solve(c)
+    A = next(tokens)  # type: str
+    B = next(tokens)  # type: str
+    C = next(tokens)  # type: str
+    solve(A, B, C)
 
 if __name__ == '__main__':
     main()

@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 import sys
 
-YES = "vowel"
-NO = "consonant"
+Alice = "Alice"
+Bob = "Bob"
+Draw = "Draw"
 
-def solve(c: str):
-    if c in set(('a', 'e', 'i', 'o', 'u')):
-        print(YES)
+def solve(A: int, B: int):
+    if A == 1:
+        A = 14
+    if B == 1:
+        B = 14
+
+    if A == B:
+        print(Draw)
+    elif A > B:
+        print(Alice)
     else:
-        print(NO)
+        print(Bob)
     return
 
 
@@ -19,8 +27,9 @@ def main():
             for word in line.split():
                 yield word
     tokens = iterate_tokens()
-    c = next(tokens)  # type: str
-    solve(c)
+    A = int(next(tokens))  # type: int
+    B = int(next(tokens))  # type: int
+    solve(A, B)
 
 if __name__ == '__main__':
     main()
