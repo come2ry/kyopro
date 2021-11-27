@@ -4,27 +4,41 @@ import math
 
 
 def solve(N: int, W: int, A: "List[int]", B: "List[int]"):
-    # DP 配列用意
-    # i 番目までの品物を重さ j 以下で選ぶ場合、品物の総和の価値の最大値を dp[i][j] とする
-    dp = [[(0, 0)]*(W+1) for _ in range(N+1)]
+    AB = list(zip(A, B))
+    AB.sort(key=lambda x: -x[0])
 
-    # 漸化式にしたがって DP を実行する
-    # i+1 番目の品物（重さ:w、価値:v）を選ぶのは
-    # i 番目までの品物で重さ w を使って稼げる価値より i+1 番目の品物で稼げる価値 v のほうが大きい場合である
+    ans = 0
     for i in range(N):
-        dp[i+1] = dp[i].copy()  # 上書きを防ぐために .copy() は必須
-        w = B[i]
-        for j in range(W+1):
-            if j + w > W:
-                if dp[i][j][1] != 0:
-                    w = W - j
-                    dp[i+1][j+w] = max((dp[i][j][0]+A[i]*w,
-                                        dp[i][j][1]+w), dp[i][j+w])
+        w = min(AB[i][1], W)
+        ans += w * AB[i][0]
+        W -= w
+        if W == 0:
+            break
+    print(ans)
 
-            dp[i+1][j+w] = max((dp[i][j][0]+A[i]*w, dp[i][j][1]+w), dp[i][j+w])
 
-    # dp 配列の末尾が N 番目までの品物から重さ W 以下で選ぶ場合の品物の価値の最大値となる。
-    print(dp[-1][-1][0])
+# def solve(N: int, W: int, A: "List[int]", B: "List[int]"):
+#     # DP 配列用意
+#     # i 番目までの品物を重さ j 以下で選ぶ場合、品物の総和の価値の最大値を dp[i][j] とする
+#     dp = [[(0, 0)]*(W+1) for _ in range(N+1)]
+
+#     # 漸化式にしたがって DP を実行する
+#     # i+1 番目の品物（重さ:w、価値:v）を選ぶのは
+#     # i 番目までの品物で重さ w を使って稼げる価値より i+1 番目の品物で稼げる価値 v のほうが大きい場合である
+#     for i in range(N):
+#         dp[i+1] = dp[i].copy()  # 上書きを防ぐために .copy() は必須
+#         w = B[i]
+#         for j in range(W+1):
+#             if j + w > W:
+#                 if dp[i][j][1] != 0:
+#                     w = W - j
+#                     dp[i+1][j+w] = max((dp[i][j][0]+A[i]*w,
+#                                         dp[i][j][1]+w), dp[i][j+w])
+
+#             dp[i+1][j+w] = max((dp[i][j][0]+A[i]*w, dp[i][j][1]+w), dp[i][j+w])
+
+#     # dp 配列の末尾が N 番目までの品物から重さ W 以下で選ぶ場合の品物の価値の最大値となる。
+#     print(dp[-1][-1][0])
 
 # def solve(N: int, W: int, A: "List[int]", B: "List[int]"):
 #     AB = list(zip(A, B))
