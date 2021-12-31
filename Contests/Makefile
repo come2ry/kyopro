@@ -1,4 +1,6 @@
-CONTEST=abc233
+#!/bin/bash
+
+CONTEST=abc231
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopuro/Contests
 ATT=atcoder-tools
 PROBLEM=A
@@ -6,10 +8,16 @@ ACTION=submit
 OPT=
 
 gen:
-	${ATT} gen ${CONTEST} --workspace ${GEN_DIR}
+	${ATT} gen ${CONTEST} --workspace ${GEN_DIR} --skip-existing-problems
+	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/" > ${GEN_DIR}/${CONTEST}/.gitignore
 
 X:
-	cd ${CONTEST}/${PROBLEM} && ${ATT} ${ACTION} ${OPT}
+	cd ${CONTEST}/${PROBLEM}; \
+	${ATT} ${ACTION} ${OPT}; \
+	if [ "$$?" = "0" ]; then \
+		sed -i -e '/${PROBLEM}\//d' ../.gitignore; \
+	fi;
+
 A:
 	$(MAKE) X PROBLEM=A ACTION=${ACTION}
 B:
@@ -30,6 +38,9 @@ I:
 	$(MAKE) X PROBLEM=I ACTION=${ACTION}
 J:
 	$(MAKE) X PROBLEM=J ACTION=${ACTION}
+Ex:
+	$(MAKE) X PROBLEM=Ex ACTION=${ACTION}
+
 A-u:
 	$(MAKE) X PROBLEM=A ACTION=${ACTION} OPT=-u
 B-u:
@@ -50,6 +61,8 @@ I-u:
 	$(MAKE) X PROBLEM=I ACTION=${ACTION} OPT=-u
 J-u:
 	$(MAKE) X PROBLEM=J ACTION=${ACTION} OPT=-u
+Ex-u:
+	$(MAKE) X PROBLEM=Ex ACTION=${ACTION} OPT=-u
 
 A-test:
 	$(MAKE) X PROBLEM=A ACTION=test
@@ -71,3 +84,21 @@ I-test:
 	$(MAKE) X PROBLEM=I ACTION=test
 J-test:
 	$(MAKE) X PROBLEM=J ACTION=test
+Ex-test:
+	$(MAKE) X PROBLEM=Ex ACTION=test
+
+COMMIT:
+	dir_path="${GEN_DIR}/${CONTEST}"; \
+	cd $${dir_path}; \
+	dirs=$$(ls ./ | sort); \
+	for dir in $$dirs; do \
+		cd ${GEN_DIR}; \
+		$(MAKE) $${dir}-test; \
+		if [ "$$?" = "0" ]; then \
+			git add ${GEN_DIR}/${CONTEST}/.gitignore; \
+			git add ${GEN_DIR}/${CONTEST}/$${dir}; \
+			git commit -m "AC: ${CONTEST}_$${dir}"; \
+		else \
+			echo [SKIP] $${dir}; \
+		fi; \
+	done
