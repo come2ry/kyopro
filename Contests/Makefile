@@ -1,23 +1,23 @@
 #!/bin/bash
 
-CONTEST=abc228
+CONTEST=abc234
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopuro/Contests
 TEMPLATE=${GEN_DIR}/template/my_template.j2
 ATT=atcoder-tools
 PROBLEM=A
 ACTION=submit
-OPT=--template ${TEMPLATE} --workspace ${GEN_DIR} --skip-existing-problems
+OPT=
 
 gen:
 	echo "${TEMPLATE}"
-	${ATT} gen ${CONTEST} ${OPT}
-	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/" > ${GEN_DIR}/${CONTEST}/.gitignore
+	${ATT} gen ${CONTEST} -template ${TEMPLATE} --workspace ${GEN_DIR} --skip-existing-problems --parallel
+	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/\ntest/" > ${GEN_DIR}/${CONTEST}/.gitignore
 
 X:
 	cd ${CONTEST}/${PROBLEM}; \
 	${ATT} ${ACTION} ${OPT}; \
 	if [ "$$?" = "0" ]; then \
-		sed -i -e '/${PROBLEM}\//d' ../.gitignore; \
+		sed -i '' -e "/${PROBLEM}\//d" ../.gitignore; \
 	fi;
 
 A:
