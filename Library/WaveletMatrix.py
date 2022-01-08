@@ -36,13 +36,9 @@ class SuccinctIndexableDictionary:
             self.blocks = (_length + 31) >> 5
             self.bit = [0]*self.blocks
             self.sum = [0]*self.blocks
-            # print(f"length: {self.length}, blocks: {self.blocks}")
-            # print(f"bit: {self.bit}")
-            # print(f"sum: {self.sum}")
 
     def set(self, k: int) -> None:
         self.bit[k >> 5] |= (1 << (k & 31))
-        # print(f"k, {k}, bit: {self.bit}")
 
     def build(self) -> None:
         self.sum[0] = 0
@@ -60,19 +56,8 @@ class SuccinctIndexableDictionary:
     def rank(self, val: bool, k: int = None) -> int:
         if k is None:
             k = val
-            # print(f"k: {k}")
-            # print(f"k >> 5: {k >> 5}")
-            # print(f"sum[k >> 5]: {self.sum[k >> 5]}")
-            # print(f"bit: {self.bit}")
-            # print(f"bit[k >> 5]: {self.bit[k >> 5]}")
-            # print(f"((1U << (k & 31)) - 1): {((1 << (k & 31)) - 1)}")
-            # print(
-            #     f"__builtin_popcount: {bin(self.bit[k >> 5] & ((1 << (k & 31)) - 1)).count('1')}")
             return self.sum[k >> 5] + bin(self.bit[k >> 5] & ((1 << (k & 31)) - 1)).count("1")
-        # print(f"val: {int(val)}, k: {k}")
-        t = self.rank(k)
-        # print(f"rank(k): {t}")
-        return t if (val) else k - t
+        return self.rank(k) if (val) else k - self.rank(k)
 
     @singledispatchmethod
     def select(self, val: bool, k: int) -> int:
@@ -108,7 +93,6 @@ class WaveletMatrix(Generic[T]):
         assert (self._T == int), "ERROR: Tはまだintしか対応していません"
         l: List[T] = [self._T(0)]*self.length
         r: List[T] = [self._T(0)]*self.length
-        # print(f"v: {v}")
 
         self.matrix = [SuccinctIndexableDictionary()]*self._MAXLOG
         self.mid = [0]*self._MAXLOG
@@ -182,23 +166,13 @@ class WaveletMatrix(Generic[T]):
     def range_freq(self, l: int, r: int, lower: T, upper: T = None) -> int:
         if upper is None:
             upper = lower
-            # print(f"upper: {upper}")
             ret: int = 0
             for level in range(self._MAXLOG - 1, -1, -1):
                 f: bool = ((upper >> level) & 1)  # type: ignore
-                # print(f"level: {level}")
-                # print(f"f: {f}")
-                t1 = self.matrix[level].rank(False, r)
-                # print(f"matrix[level].rank(false, r): {t1}")
-                t2 = self.matrix[level].rank(False, l)
-                # print(f"matrix[level].rank(false, l): {t2}")
                 if (f):
-                    ret += t1 - \
-                        t2
-                # print(f"ret: {ret}")
+                    ret += self.matrix[level].rank(False, r) - \
+                        self.matrix[level].rank(False, l)
                 (l, r) = self.succ(f, l, r, level)
-                # print(f"(l, r): ({l}, {r})")
-            # print(f"ret: {ret}")
             return ret
         return self.range_freq(l, r, upper) - self.range_freq(l, r, lower)
 
@@ -208,7 +182,6 @@ class WaveletMatrix(Generic[T]):
 
     def next_value(self, l: int, r: int, lower: T) -> T:
         cnt: int = self.range_freq(l, r, lower)
-        # print(f"cnt: {cnt}")
         return self._T(-1) if (cnt == (r - l)) else self.kth_smallest(l, r, cnt)
 
 
@@ -220,18 +193,15 @@ class CompressedWaveletMatrix(Generic[T]):
     ys: List[T]
 
     def __init__(self, _template_args: Tuple[Type[T], int], v: List[T]) -> None:
-        # print(f"v: {v}")
         self.ys = v.copy()
         self._T, self._MAXLOG = _template_args
         self.ys.sort()
         seen: set = set()
         seen_add = seen.add
         self.ys = [x for x in self.ys if x not in seen and not seen_add(x)]
-        # print(f"ys: {self.ys}")
         t: List[int] = [0]*len(v)
         for i in range(len(v)):
             t[i] = self.get(v[i])
-        # print(f"t: {t}")
         self.mat = WaveletMatrix[int]((int, self._MAXLOG), t)
 
     def get(self, x: T) -> int:
@@ -269,7 +239,6 @@ class CompressedWaveletMatrix(Generic[T]):
 
     def next_value(self, l: int, r: int, lower: T) -> T:
         ret: T = self.mat.next_value(l, r, self.get(lower))
-        # print(f"ret: {ret}")
         return self._T(-1) if (ret == -1) else self.ys[ret]  # type: ignore
 
 
