@@ -2,7 +2,7 @@
 indent_type='space' # 'tab' or 'space'
 indent_width=4
 # template_file='~/my_template.cpp'
-workspace_dir='~/Document_local/Documents/kyopuro/Practice/AtCoder'
+workspace_dir='/Users/tkrk/Document_local/Documents/kyopuro/Contests'
 lang='python' # Check README.md for the supported languages.
 # code_generator_file="~/custom_code_generator.py"
 [postprocess]
@@ -19,5 +19,5 @@ download_without_login=false
 parallel_download=false
 save_no_session_cache=false
 skip_existing_problems=true
-in_example_format="in_{}.txt"
-out_example_format="out_{}.txt"
+in_example_format="test/sample-{}.in"
+out_example_format="test/sample-{}.out"
