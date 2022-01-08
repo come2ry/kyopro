@@ -14,6 +14,8 @@ struct WaveletMatrix {
 
   WaveletMatrix(vector< T > v) : length(v.size()) {
     vector< T > l(length), r(length);
+    std::cout << "v: ";
+    print(v);
     for(int level = MAXLOG - 1; level >= 0; level--) {
       matrix[level] = SuccinctIndexableDictionary(length + 1);
       int left = 0, right = 0;
@@ -85,12 +87,22 @@ struct WaveletMatrix {
 
   // count i s.t. (l <= i < r) && (v[i] < upper)
   int range_freq(int l, int r, T upper) {
+    std::cout << "upper: " << upper << std::endl;
     int ret = 0;
     for(int level = MAXLOG - 1; level >= 0; level--) {
       bool f = ((upper >> level) & 1);
-      if(f) ret += matrix[level].rank(false, r) - matrix[level].rank(false, l);
+      std::cout << "level: " << level << std::endl;
+      std::cout << "f: " << f << std::endl;
+      auto t1 = matrix[level].rank(false, r);
+      std::cout << "matrix[level].rank(false, r): " << t1 << std::endl;
+      auto t2 = matrix[level].rank(false, l);
+      std::cout << "matrix[level].rank(false, l): " << t2 << std::endl;
+      if(f) ret += t1 - t2;
+      std::cout << "ret: " << ret << std::endl;
       tie(l, r) = succ(f, l, r, level);
+      std::cout << "(l, r): (" << l << ", " << r << ")" << std::endl;
     }
+    std::cout << "ret: " << ret << std::endl;
     return ret;
   }
 
@@ -108,6 +120,7 @@ struct WaveletMatrix {
   // min v[i] s.t. (l <= i < r) && (lower <= v[i])
   T next_value(int l, int r, T lower) {
     int cnt = range_freq(l, r, lower);
+    std::cout << "cnt: " << cnt << std::endl;
     return cnt == r - l ? T(-1) : kth_smallest(l, r, cnt);
   }
 };
@@ -118,10 +131,16 @@ struct CompressedWaveletMatrix {
   vector< T > ys;
 
   CompressedWaveletMatrix(const vector< T > &v) : ys(v) {
+    std::cout << "v: ";
+    print(v);
     sort(begin(ys), end(ys));
     ys.erase(unique(begin(ys), end(ys)), end(ys));
+    std::cout << "ys: ";
+    print(ys);
     vector< int > t(v.size());
     for(int i = 0; i < v.size(); i++) t[i] = get(v[i]);
+    std::cout << "t: ";
+    print(t);
     mat = WaveletMatrix< int, MAXLOG >(t);
   }
 
@@ -166,6 +185,7 @@ struct CompressedWaveletMatrix {
 
   T next_value(int l, int r, T lower) {
     auto ret = mat.next_value(l, r, get(lower));
+    std::cout << "ret: " << ret << std::endl;
     return ret == -1 ? T(-1) : ys[ret];
   }
 };
