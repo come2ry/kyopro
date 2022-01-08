@@ -1,14 +1,16 @@
 #!/bin/bash
 
-CONTEST=abc231
+CONTEST=abc228
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopuro/Contests
+TEMPLATE=${GEN_DIR}/template/my_template.j2
 ATT=atcoder-tools
 PROBLEM=A
 ACTION=submit
-OPT=
+OPT=--template ${TEMPLATE} --workspace ${GEN_DIR} --skip-existing-problems
 
 gen:
-	${ATT} gen ${CONTEST} --workspace ${GEN_DIR} --skip-existing-problems
+	echo "${TEMPLATE}"
+	${ATT} gen ${CONTEST} ${OPT}
 	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/" > ${GEN_DIR}/${CONTEST}/.gitignore
 
 X:
