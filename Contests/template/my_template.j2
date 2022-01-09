@@ -5,7 +5,7 @@ import bisect
 import heapq
 import math
 import sys
-from collection import defaultdict, deque
+from collections import defaultdict, deque
 from itertools import (accumulate, groupby, permutations, combinations,
                        combinations_with_replacement, product)
 from typing import *
@@ -25,19 +25,18 @@ NO = "{{ no_str }}"  # type: str
 {% endif %}
 {% endif %}
 
+T = TypeVar('T')
+D = TypeVar('D')
 
-def chmax(a: T, b: T) -> bool:
+
+def chmax(a: T, b: T) -> Tuple[T, bool]:
     if (a < b):
         a = b  # aをbで更新
-        return True
-    return False
+        return (a, True)
+    return (a, False)
 
 
 def chmin(a: T, b: T) -> Tuple[T, bool]:
-    """
-    aよりもbが小さいならばaをbで更新する
-    (更新されたならばtrueを返す)
-    """
     if (a > b):
         a = b  # aをbで更新
         return (a, True)
