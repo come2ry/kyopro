@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONTEST=abc200
+CONTEST=abc229
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopro/Contests
 TEMPLATE=${GEN_DIR}/template/my_template.j2
 ATT=atcoder-tools
@@ -10,7 +10,7 @@ OPT=
 
 gen:
 	echo "${TEMPLATE}"
-	${ATT} gen ${CONTEST} --template ${TEMPLATE} --workspace ${GEN_DIR} --skip-existing-problems --parallel
+	${ATT} gen ${CONTEST} --lang python --template ${TEMPLATE} --workspace ${GEN_DIR} --skip-existing-problems --parallel
 	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/\ntest/" > ${GEN_DIR}/${CONTEST}/.gitignore
 	find ./${CONTEST} -name "main.py" | sed 's/\// /g' | awk '{print "sed -i \"\" -e \"s/\\[contest_id\\]/${CONTEST}/g\" -e \"s/\\[problem\\]/"$$3"/g\" ${CONTEST}/"$$3"/main.py"}' | sh
 

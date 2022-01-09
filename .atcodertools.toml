@@ -2,7 +2,7 @@
 indent_type='space' # 'tab' or 'space'
 indent_width=4
 # template_file='~/my_template.cpp'
-workspace_dir='/Users/tkrk/Document_local/Documents/kyopuro/Contests'
+workspace_dir='/Users/tkrk/Document_local/Documents/kyopro/Contests'
 lang='python' # Check README.md for the supported languages.
 # code_generator_file="~/custom_code_generator.py"
 [postprocess]
