@@ -11,7 +11,7 @@ OPT=
 gen:
 	echo "${TEMPLATE}"
 	${ATT} gen ${CONTEST} --lang python --template ${TEMPLATE} --workspace ${GEN_DIR} --parallel
-	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/\ntest/" > ${GEN_DIR}/${CONTEST}/.gitignore
+	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/" > ${GEN_DIR}/${CONTEST}/.gitignore
 	find ./${CONTEST} -name "main.py" | sed 's/\// /g' | awk '{print "sed -i \"\" -e \"s/\\[contest_id\\]/${CONTEST}/g\" -e \"s/\\[problem\\]/"$$3"/g\" ${CONTEST}/"$$3"/main.py"}' | sh
 
 X:
