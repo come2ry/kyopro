@@ -36,11 +36,15 @@ def solve(S: str, K: int):
     ans = 0
     r, sum_ = 0, 0
     for l in range(n):
+        # 次のrが行けるか確認
         while ((r < n) and (sum_ + a[r] <= K)):
+            # 行けたら実行
             sum_ += a[r]
+            # 次のrへ
             r += 1
-        ans, _ = chmax(ans, r-l)
-        sum_ -= a[l]
+        # 行けないところまで来た
+        ans, _ = chmax(ans, r-l)  # [l, r)として結果を更新
+        sum_ -= a[l]  # 次のlに向けての処理
     print(ans)
 
 # def solve(S: str, K: int):
