@@ -1,8 +1,36 @@
 #!/usr/bin/env python3
+# https://atcoder.jp/contests/abc229/tasks/abc229_A?lang=ja
+
+import bisect
+import heapq
+import math
 import sys
+from collections import defaultdict, deque
+from itertools import (accumulate, groupby, permutations, combinations,
+                       combinations_with_replacement, product)
+from typing import *
+input = sys.stdin.buffer.readline
 
 YES = "Yes"  # type: str
 NO = "No"  # type: str
+
+
+T = TypeVar('T')
+D = TypeVar('D')
+
+
+def chmax(a: T, b: T) -> Tuple[T, bool]:
+    if (a < b):
+        a = b  # aをbで更新
+        return (a, True)
+    return (a, False)
+
+
+def chmin(a: T, b: T) -> Tuple[T, bool]:
+    if (a > b):
+        a = b  # aをbで更新
+        return (a, True)
+    return (a, False)
 
 
 def solve(S: "List[str]"):
