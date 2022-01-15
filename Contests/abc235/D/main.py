@@ -42,7 +42,7 @@ def get_cycles(n: str):
 
     return
 
-def get_cycles_next(n: int):
+def get_cycle_next(n: int):
     n = str(n)
     n_str = n*2
     l = len(n)
@@ -54,26 +54,28 @@ def get_cycles_next(n: int):
 def solve(a: int, N: int):
     Q = deque([])
     Q.append((N, 0, 0))
+    is_searched = [0]*10**6
+    ans = float('inf')
     while 1:
-        # print(Q)
         if len(Q) == 0:
             break
         n, c, c2 = Q.popleft()
+        if is_searched[n]:
+            continue
+        is_searched[n] = 1
 
         if c2 != len(str(n))-1:
-            n2 = get_cycles_next(n)
+            n2 = get_cycle_next(n)
             if n2 is not None:
                 Q.appendleft((n2, c+1, c2+1))
 
         if (n % a) == 0:
-            t = math.log(n, a)
-            if (t % 1) == 0:
-                print(c+int(t))
-                return
+            if (n // a) == 1:
+                ans, _ = chmin(ans, c+1)
             else:
                 Q.appendleft((n//a, c+1, 0))
 
-    print(-1)
+    print(-1 if ans == float('inf') else ans)
     return
 
 
