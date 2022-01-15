@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONTEST=abc229
+CONTEST=abc235
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopro/Contests
 TEMPLATE=${GEN_DIR}/template/my_template.j2
 ATT=atcoder-tools
@@ -17,9 +17,11 @@ gen:
 X:
 	cd ${CONTEST}/${PROBLEM}; \
 	${ATT} ${ACTION} ${OPT}; \
-	if [ "$$?" = "0" ]; then \
+	result=$$?; \
+	if [ "$$result" = "0" ]; then \
 		sed -i '' -e "/${PROBLEM}\//d" ../.gitignore; \
-	fi;
+	fi; \
+	exit $$result;
 
 A:
 	$(MAKE) X PROBLEM=A ACTION=${ACTION}
