@@ -70,7 +70,7 @@ class UF_tree:
 
 
 def solve(N: int, M: int, Q: int, a: "List[int]", b: "List[int]", c: "List[int]", u: "List[int]", v: "List[int]", w: "List[int]"):
-    uf = UF_tree(M+1)
+    uf = UF_tree(M+Q)
     abc = zip(a, b, c, [0]*M)
     uvw = zip(u, v, w, list(range(1, Q+1)))
     abc = list(abc) + list(uvw)
