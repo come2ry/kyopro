@@ -3,14 +3,15 @@
 CONTEST=abc235
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopro/Contests
 TEMPLATE=${GEN_DIR}/template/my_template.j2
-ATT=atcoder-tools
+CMD=atcoder-tools
 PROBLEM=A
 ACTION=submit
 OPT=
+PARALLEL_NUM=8
 
 gen:
 	echo "${TEMPLATE}"
-	${ATT} gen ${CONTEST} --lang python --template ${TEMPLATE} --workspace ${GEN_DIR} --parallel
+	${CMD} gen ${CONTEST} --lang python --template ${TEMPLATE} --workspace ${GEN_DIR} --parallel
 	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/" > ${GEN_DIR}/${CONTEST}/.gitignore
 	find ./${CONTEST} -name "main.py" | sed 's/\// /g' | awk '{print "sed -i \"\" -e \"s/\\[contest_id\\]/${CONTEST}/g\" -e \"s/\\[problem\\]/"$$3"/g\" ${CONTEST}/"$$3"/main.py"}' | sh
 
@@ -20,17 +21,20 @@ gen:
 	for dir in $$dirs; do \
 		pushd $${dir}; \
 		oj-template -t generate.py "https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_$${dir}" > ./generate.py; \
+		chmod 0744 ./generate.py; \
 		popd; \
 	done
 
 X:
 	cd ${CONTEST}/${PROBLEM}; \
-	${ATT} ${ACTION} ${OPT}; \
-	result=$$?; \
-	if [ "$$result" = "0" ]; then \
-		sed -i '' -e "/${PROBLEM}\//d" ../.gitignore; \
-	fi; \
-	exit $$result;
+	${CMD} ${ACTION} ${OPT}; \
+	if [ "${CMD}" == "atcoder-tools" ]; then \
+		result=$$?; \
+		if [ "$$result" = "0" ]; then \
+			sed -i '' -e "/${PROBLEM}\//d" ../.gitignore; \
+		fi; \
+		exit $$result; \
+	fi;
 
 A:
 	$(MAKE) X PROBLEM=A ACTION=${ACTION}
@@ -100,6 +104,29 @@ J-test:
 	$(MAKE) X PROBLEM=J ACTION=test
 Ex-test:
 	$(MAKE) X PROBLEM=Ex ACTION=test
+
+A-gi:
+	$(MAKE) X PROBLEM=A CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+B-gi:
+	$(MAKE) X PROBLEM=B CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+C-gi:
+	$(MAKE) X PROBLEM=C CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+D-gi:
+	$(MAKE) X PROBLEM=D CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+E-gi:
+	$(MAKE) X PROBLEM=E CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+F-gi:
+	$(MAKE) X PROBLEM=F CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+G-gi:
+	$(MAKE) X PROBLEM=G CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+H-gi:
+	$(MAKE) X PROBLEM=H CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+I-gi:
+	$(MAKE) X PROBLEM=I CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+J-gi:
+	$(MAKE) X PROBLEM=J CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
+Ex-gi:
+	$(MAKE) X PROBLEM=Ex CMD=oj ACTION=g/i OPT='./generate.py --hack "python3 main.py" -j ${PARALLEL_NUM}'
 
 COMMIT:
 	git add ${GEN_DIR}/${CONTEST}/.gitignore; \
