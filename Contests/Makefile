@@ -28,8 +28,8 @@ gen:
 X:
 	cd ${CONTEST}/${PROBLEM}; \
 	${CMD} ${ACTION} ${OPT}; \
+	result=$$?; \
 	if [ "${CMD}" == "atcoder-tools" ]; then \
-		result=$$?; \
 		if [ "$$result" = "0" ]; then \
 			sed -i '' -e "/${PROBLEM}\//d" ../.gitignore; \
 		fi; \
