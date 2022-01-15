@@ -14,6 +14,15 @@ gen:
 	echo "A/\nB/\nC/\nD/\nE/\nF/\nG/\nH/\nI/\nJ/\nEx/" > ${GEN_DIR}/${CONTEST}/.gitignore
 	find ./${CONTEST} -name "main.py" | sed 's/\// /g' | awk '{print "sed -i \"\" -e \"s/\\[contest_id\\]/${CONTEST}/g\" -e \"s/\\[problem\\]/"$$3"/g\" ${CONTEST}/"$$3"/main.py"}' | sh
 
+	dir_path="${GEN_DIR}/${CONTEST}"; \
+	cd $${dir_path}; \
+	dirs=$$(ls ./ | sort); \
+	for dir in $$dirs; do \
+		pushd $${dir}; \
+		oj-template -t generate.py "https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_$${dir}" > ./generate.py; \
+		popd; \
+	done
+
 X:
 	cd ${CONTEST}/${PROBLEM}; \
 	${ATT} ${ACTION} ${OPT}; \
@@ -93,6 +102,8 @@ Ex-test:
 	$(MAKE) X PROBLEM=Ex ACTION=test
 
 COMMIT:
+	git add ${GEN_DIR}/${CONTEST}/.gitignore; \
+	git commit -m "UPDATE: ${CONTEST} .gitignore"; \
 	dir_path="${GEN_DIR}/${CONTEST}"; \
 	cd $${dir_path}; \
 	dirs=$$(ls ./ | sort); \
