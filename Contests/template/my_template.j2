@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # https://atcoder.jp/contests/[contest_id]/tasks/[contest_id]_[problem]?lang=ja
-
-import bisect
-import heapq
-import math
-import sys
-from collections import defaultdict, deque
-from functools import lru_cache
-from itertools import (accumulate, groupby, permutations, combinations,
-                       combinations_with_replacement, product)
-from typing import *
+import bisect  # noqa: F401
+import heapq  # noqa: F401
+import math  # noqa: F401
+import sys  # noqa: F401
 input = sys.stdin.buffer.readline
+from collections import defaultdict, deque  # noqa: F401
+from functools import lru_cache  # noqa: F401
+from itertools import (accumulate, combinations,  # noqa: F401
+                       combinations_with_replacement, groupby, permutations,
+                       product)
+from typing import *  # noqa: F401
 {% if prediction_success %}
 {% if mod or yes_str or no_str %}
 
@@ -26,18 +26,15 @@ NO = "{{ no_str }}"  # type: str
 {% endif %}
 {% endif %}
 
-T = TypeVar('T')
-D = TypeVar('D')
 
-
-def chmax(a: T, b: T) -> Tuple[T, bool]:
+def chmax(a: Any, b: Any) -> Tuple[Any, bool]:
     if (a < b):
         a = b  # aをbで更新
         return (a, True)
     return (a, False)
 
 
-def chmin(a: T, b: T) -> Tuple[T, bool]:
+def chmin(a: Any, b: Any) -> Tuple[Any, bool]:
     if (a > b):
         a = b  # aをbで更新
         return (a, True)
@@ -63,6 +60,7 @@ def main():
     # Failed to predict input format
     pass
     {% endif %}
+
 
 if __name__ == '__main__':
     main()
