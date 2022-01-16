@@ -1,4 +1,23 @@
 {
+    "python.formatting.autopep8Args": [
+        "--aggressive",
+        "E402"
+    ],
+    "python.formatting.provider": "autopep8",
+    "python.languageServer": "Default",
+    "python.linting.enabled": true,
+    "python.linting.flake8Args": [
+        "--ignore=W293, W504, E402, E741, F403, F405",
+        "--max-line-length=160"
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.mypyEnabled": false,
+    "python.linting.pylintEnabled": false,
+    "python.testing.pytestArgs": [
+        "Library"
+    ],
+    "python.testing.pytestEnabled": true,
     "python.testing.unittestArgs": [
         "-v",
         "-s",
@@ -6,10 +25,5 @@
         "-p",
         "*_test.py"
     ],
-    "python.testing.pytestEnabled": true,
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestArgs": [
-        "Library"
-    ],
-    "python.formatting.provider": "autopep8"
+    "python.testing.unittestEnabled": false
 }
