@@ -3,8 +3,21 @@
 # テストケース拡張
 ```sh
 oj g/i ./generate.py
-oj g/o -c "python3 ./main_tle.py"
-oj t -c "python3 main.py" --hack
+```
+
+# コーナーケース追加
+```sh
+# 愚直解
+oj g/i ./generate.py --jobs 5
+oj g/o -c "pypy ./main_tle.py" --jobs 5
+
+# tleケース探し
+oj g/i ./generate.py --hack "pypy main.py" --tle 2 --jobs 5
+```
+
+# テスト
+```sh
+oj t -c "pypy main.py" --tle 2 --jobs 5
 ```
 
 # Atcoderのsystem testcaseをDL
