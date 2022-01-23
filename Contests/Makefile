@@ -145,3 +145,6 @@ COMMIT:
 			echo [SKIP] $${dir}; \
 		fi; \
 	done
+
+setup:
+	pip3 install git+https://github.com/come2ry/atcoder-tools@stable

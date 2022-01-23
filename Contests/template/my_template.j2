@@ -4,13 +4,15 @@ import bisect  # noqa: F401
 import heapq  # noqa: F401
 import math  # noqa: F401
 import sys  # noqa: F401
-input = sys.stdin.buffer.readline
 from collections import defaultdict, deque  # noqa: F401
 from functools import lru_cache  # noqa: F401
 from itertools import (accumulate, combinations,  # noqa: F401
                        combinations_with_replacement, groupby, permutations,
                        product)
 from typing import *  # noqa: F401
+
+input = (lambda: sys.stdin.readline().rstrip("\r\n"))
+
 {% if prediction_success %}
 {% if mod or yes_str or no_str %}
 
