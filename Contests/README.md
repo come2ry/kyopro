@@ -1,5 +1,31 @@
-# 使い方
+# atcoder-tools使い方
 
+# 事前準備
+Makefileの以下を変更する
+```
+CONTEST=<コンテストID>
+```
+
+# 雛形作成
+```sh
+make gen
+```
+
+# テスト
+```sh
+make {A..J}-test
+```
+
+# 提出
+```sh
+# 提出
+make {A..J}
+
+# 再提出
+make {A..J}-u
+```
+
+# oj使い方
 # テストケース拡張
 ```sh
 oj g/i ./generate.py
@@ -18,6 +44,11 @@ oj g/i ./generate.py --hack "pypy main.py" --tle 2 --jobs 5
 # テスト
 ```sh
 oj t -c "pypy main.py" --tle 2 --jobs 5
+```
+
+# 提出
+```sh
+oj s https://atcoder.jp/contests/abc242/tasks/abc242_C main_pypy.py --language 4047 -y
 ```
 
 # Atcoderのsystem testcaseをDL
