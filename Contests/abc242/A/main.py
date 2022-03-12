@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# https://atcoder.jp/contests/[contest_id]/tasks/[contest_id]_[problem]?lang=ja
+# https://atcoder.jp/contests/abc242/tasks/abc242_A?lang=ja
 import bisect  # noqa: F401
 import heapq  # noqa: F401
 import math  # noqa: F401
