@@ -51,7 +51,7 @@ class FloydWarshall:
         self.prev = [[-1] * self.N for _ in range(self.N)]  # prev[s][t]: the previous vertex of vertex t on a shortest path from s
         # initialize
         for v in range(self.N):
-            self.dist[v][v] = 0
+            # self.dist[v][v] = 0
             for u, c in self.E[v]:
                 self.dist[v][u] = c
                 self.prev[v][u] = v
@@ -90,23 +90,19 @@ def solve(N: int, M: int, A: "List[int]", B: "List[int]", C: "List[int]"):
         edges[(A[i] - 1, B[i] - 1)] = 0
         wf.add_edge(A[i] - 1, B[i] - 1, C[i], undirected=True)
 
-    wf.distance()
-
-    for i in range(N - 1):
-        for j in range(i + 1, N):
-            path = wf.shortest_path(i, j)
-            pre_node = path[0]
-            for node in path[1:]:
-                if pre_node > node:
-                    edges[(node, pre_node)] = 1
-                else:
-                    edges[(pre_node, node)] = 1
-                pre_node = node
-
+    dists = wf.distance()
+    # print(dists)
     ans = 0
-    for k, v in edges.items():
-        if v == 0:
-            ans += 1
+    for i in range(M):
+        ai = A[i] - 1
+        bi = B[i] - 1
+        ci = C[i]
+        unused = 0
+        for k in range(N):
+            if dists[ai][k] + dists[k][bi] <= ci:
+                unused = 1
+
+        ans += unused
 
     print(ans)
     return
