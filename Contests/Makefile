@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONTEST=abc235
+CONTEST=abc246
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopro/Contests
 TEMPLATE=${GEN_DIR}/template/my_template.j2
 CMD=atcoder-tools
@@ -8,6 +8,8 @@ PROBLEM=A
 ACTION=submit
 OPT=
 PARALLEL_NUM=8
+CHROME_PATH=/Applications/Google Chrome.app
+
 
 gen:
 	echo "${TEMPLATE}"
@@ -24,6 +26,19 @@ gen:
 		chmod 0744 ./generate.py; \
 		popd; \
 	done
+
+open:
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/tasks
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_a
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_b
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_c
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_d
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_e
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/tasks/${CONTEST}_f
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/submissions/me
+	open -a '${CHROME_PATH}' https://atcoder.jp/contests/${CONTEST}/standings
+
 
 X:
 	cd ${CONTEST}/${PROBLEM}; \
