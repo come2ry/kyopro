@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CONTEST=abc252
-GEN_DIR=/Users/tkrk/Document_local/Documents/kyopro/Contests
+CONTEST=abc136
+GEN_DIR=/Users/tkrk/Document_local/Documents/kyopro/Practice/Atcoder
 TEMPLATE=/Users/tkrk/Document_local/Documents/kyopro/template/my_template.j2
 CMD=atcoder-tools
 PROBLEM=A

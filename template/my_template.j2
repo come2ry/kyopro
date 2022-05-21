@@ -16,7 +16,6 @@ if "PyPy" in sys.version:
     pypyjit.set_param('max_unroll_recursion=-1')
 
 input = (lambda: sys.stdin.readline().rstrip("\r\n"))
-
 {% if prediction_success %}
 {% if mod or yes_str or no_str %}
 
@@ -31,20 +30,6 @@ YES = "{{ yes_str }}"  # type: str
 NO = "{{ no_str }}"  # type: str
 {% endif %}
 {% endif %}
-
-
-def chmax(a: Any, b: Any) -> Tuple[Any, bool]:
-    if (a < b):
-        a = b  # aをbで更新
-        return (a, True)
-    return (a, False)
-
-
-def chmin(a: Any, b: Any) -> Tuple[Any, bool]:
-    if (a > b):
-        a = b  # aをbで更新
-        return (a, True)
-    return (a, False)
 {% if prediction_success %}
 
 
