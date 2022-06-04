@@ -18,46 +18,18 @@ if "PyPy" in sys.version:
 input = (lambda: sys.stdin.readline().rstrip("\r\n"))
 
 
-def make_divisors(n):
-    print(f"make_divisors: n: {n}")
-    lower_divisors, upper_divisors = [], []
-    i = 1
-    while i * i <= n:
-        if n % i == 0:
-            lower_divisors.append(i)
-            if i != n // i:
-                upper_divisors.append(n // i)
-        i += 1
-    return lower_divisors + upper_divisors[::-1]
-
-
 def solve(N: int):
     ans = 0
-    # print(N)
+
     for i in range(1, N + 1):
-        # print(i)
-        if i <= int(N**(1 / 2)):
-            d = len(make_divisors(i))
-            tmp = ((d - 1) * 2 + 1)
-            # print(f"tmp: {tmp}")
-            ans += tmp
-            continue
-
-        d = 0
-
-        t2 = []
-        t = make_divisors(i)
-        for j in range(len(t)):
-            if (i**2) // t[j] > N:
-                continue
-            t2.append(t[j])
-
-        print(f"{N}: {t} -> {t2}")
-        d = len(t2)
-        tmp = ((d - 1) * 2 + 1)
-        ans += tmp
-        # print(f"tmp: {tmp}")
-        # print(i**2, tmp, ans)
+        k = i
+        for j in range(2, int(k**(1 / 2)) + 1):
+            while (k % (j * j) == 0):
+                k /= (j * j)
+        j = 1
+        while (k * (j * j) <= N):
+            ans += 1
+            j += 1
     print(ans)
     return
 
