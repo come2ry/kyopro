@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONTEST=abc252
+CONTEST=abc324
 GEN_DIR=/Users/tkrk/Document_local/Documents/kyopro/Contests
 TEMPLATE=/Users/tkrk/Document_local/Documents/kyopro/template/my_template.j2
 CMD=atcoder-tools
